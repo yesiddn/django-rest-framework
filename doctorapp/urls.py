@@ -22,6 +22,7 @@ from bookings import urls as urls_bookings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('docs.urls')),
     path('api/patients/', include(urls_patients)),
     path('api/doctors/', include(urls_doctors)),
     path('api/bookings/', include(urls_bookings)),

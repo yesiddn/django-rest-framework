@@ -8,6 +8,7 @@ class Doctor(models.Model):
   email = models.EmailField(unique=True)
   address = models.TextField()
   biography = models.TextField(blank=True, null=True)
+  is_on_vacation = models.BooleanField(default=False)
 
 class Department(models.Model):
   name = models.CharField(max_length=100)

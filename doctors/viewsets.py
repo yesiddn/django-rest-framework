@@ -1,12 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly # existen muchas clases de permisos, esta es la más básica que permite el acceso a los usuarios autenticados
+# IsAuthenticatedOrReadOnly permite que los usuarios autenticados puedan hacer POST, PUT, PATCH y DELETE, mientras que los usuarios no autenticados solo pueden hacer GET
 from .models import Doctor, Department, MedicalNote, DoctorAvailability
 from .serializers import DoctorSerializer, DepartmentSerializer, MedicalNoteSerializer, DoctorAvailabilitySerializer
+from .permissions import IsDoctor  # si se quiere usar un permiso personalizado, se debe importar aquí
 
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsDoctor]  # solo los usuarios autenticados pueden acceder a las vistas de este viewset
 
     # los actions ayudan a definir acciones personalizadas en el viewset
     # para usar un action, se va a URL /api/doctors/doctors/<pk>/set_on_vacation/ y en la vista de django que aparece hay que dar click en el boton "POST" para ejecutar la acción
